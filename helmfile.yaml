@@ -1,0 +1,26 @@
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com
+
+helmDefaults:
+  tillerless: true
+  atomic: true
+  verify: false
+  wait: true
+  timeout: 6000
+  recreatePods: true
+  force: true
+
+releases:
+- name: kubernetes-dashboard
+  namespace: dashboard
+  chart: stable/kubernetes-dashboard
+  version: ${k8s_dashboard_version}
+  installed: ${k8s_dashboard_enabled}
+  set:
+  - name: rbac.clusterAdminRole
+    value: true
+  - name: enableInsecureLogin
+    value: true
+  - name: enableSkipLogin
+    value: true
